@@ -40,7 +40,7 @@ audit:
 ## build: build the application
 .PHONY: build
 build:
-	@echo 'Building cmd/crawler...'
-	go build -o=./bin/crawler ./cmd/crawler
-	GOOS=linux GOARCH=amd64 go build -o=./bin/linux_amd64/crawler ./cmd/crawler
-	GOOS=linux GOARCH=arm64 go build -o=./bin/linux_arm64/crawler ./cmd/crawler
+	@echo 'Building cmd/parser...'
+	go build -o=./bin/parser ./cmd/parser
+	GOOS=linux GOARCH=amd64 go build -o=./bin/linux_amd64/parser ./cmd/parser
+	GOOS=linux GOARCH=arm64 go build -o=./bin/linux_arm64/parser ./cmd/parser
