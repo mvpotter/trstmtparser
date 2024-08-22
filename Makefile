@@ -41,6 +41,16 @@ audit:
 .PHONY: build
 build:
 	@echo 'Building cmd/parser...'
-	go build -o=./bin/parser ./cmd/parser
-	GOOS=linux GOARCH=amd64 go build -o=./bin/linux_amd64/parser ./cmd/parser
-	GOOS=linux GOARCH=arm64 go build -o=./bin/linux_arm64/parser ./cmd/parser
+	go build -ldflags "-w -s" -o=./bin/parser ./cmd/parser
+	GOOS=linux GOARCH=amd64 go build -ldflags "-w -s" -o=./bin/linux_amd64/parser ./cmd/parser
+	GOOS=linux GOARCH=arm64 go build -ldflags "-w -s" -o=./bin/linux_arm64/parser ./cmd/parser
+
+## build: docker build local image
+.PHONY: docker/build
+docker/build:
+	docker build --no-cache -t mvpotter/trstmtparser:v0.0.1-local .
+
+## build: docker push image
+.PHONY: docker/push
+docker/push:
+	docker buildx build --platform linux/amd64,linux/arm64 --push -t mvpotter/trstmtparser:v0.0.1 .

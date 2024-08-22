@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	_ "time/tzdata"
 )
 
 func parseDEDate(val string) (time.Time, error) {
