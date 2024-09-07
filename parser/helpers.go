@@ -11,12 +11,14 @@ import (
 
 func parseDEDate(val string) (time.Time, error) {
 	loc, _ := time.LoadLocation("Europe/Berlin")
-	t, err := monday.ParseInLocation("2 January 2006", val, loc, monday.LocaleDeDE)
+	parts := strings.Split(val, " ")
+	if len(parts[1]) > 3 {
+		parts[1] = parts[1][0:3]
+	}
+	parts[1] += "."
+	t, err := monday.ParseInLocation("2 Jan. 2006", strings.Join(parts, " "), loc, monday.LocaleDeDE)
 	if err != nil {
-		t, err = monday.ParseInLocation("2 Jan. 2006", val, loc, monday.LocaleDeDE)
-		if err != nil {
-			return time.Time{}, fmt.Errorf("unable to parse date = %v, %w", val, err)
-		}
+		return time.Time{}, fmt.Errorf("unable to parse date = %v, %w", val, err)
 	}
 
 	return t, nil
